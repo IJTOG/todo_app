@@ -20,7 +20,14 @@ function Todo() {
     fetchData();
   }, []);
 
-  return <Todolist todos={todos} />;
+  const fetchData = async () => {
+    try {
+      let data = await getTodos();
+      setTodos(data);
+    } catch {}
+  };
+
+  return <Todolist todos={todos} fetchData={fetchData} />;
 }
 
 export default Todo;

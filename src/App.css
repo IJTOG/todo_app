@@ -28,6 +28,16 @@
   color: #61dafb;
 }
 
+.App-input {
+  outline: 0;
+  border-width: 0 0 2px;
+}
+
+.App-input:focus {
+  box-shadow: none;
+  border-color: #2e9cdb;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

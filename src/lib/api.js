@@ -53,19 +53,16 @@ const getProduct = async (_id) => {
   }
 };
 
-const createProduct = async (form) => {
+const createTodo = async (form) => {
   try {
-    let response = await axios.post(
-      `http://${host}:${port}/api/products/create`,
-      form
-    );
+    let response = await axios.post(`${host}/todos`, form);
     return response.data;
   } catch (err) {
     return Promise.reject(err);
   }
 };
 
-const updateProduct = async (form) => {
+const updateTodo = async (form) => {
   try {
     let response = await axios.patch(
       `http://${host}:${port}/api/products/update`,
@@ -77,22 +74,13 @@ const updateProduct = async (form) => {
   }
 };
 
-const deleteProduct = async (_id) => {
+const deleteTodo = async (_id) => {
   try {
-    let response = await axios.delete(
-      `http://${host}:${port}/api/products/delete/` + _id
-    );
+    let response = await axios.delete(`${host}/todos/` + _id);
     return response.data;
   } catch (err) {
     return Promise.reject(err);
   }
 };
 
-export {
-  login,
-  getTodos,
-  getProduct,
-  deleteProduct,
-  updateProduct,
-  createProduct
-};
+export { login, getTodos, getProduct, deleteTodo, updateTodo, createTodo };

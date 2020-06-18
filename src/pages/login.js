@@ -26,7 +26,7 @@ function Login() {
               <div className="form-group">
                 <label>Username</label>
                 <input
-                  className="form-control"
+                  className="form-control  App-input"
                   value={form.username}
                   onChange={(e) =>
                     setForm({ ...form, username: e.target.value })
@@ -36,7 +36,7 @@ function Login() {
               <div className="form-group">
                 <label>Password</label>
                 <input
-                  className="form-control"
+                  className="form-control  App-input"
                   value={form.password}
                   onChange={(e) =>
                     setForm({ ...form, password: e.target.value })
