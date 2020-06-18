@@ -1,48 +1,46 @@
 import React from "react";
-import { createTodo } from "../../lib/api";
+import { updateTodo } from "../../lib/api";
 
-function Todoform({ fetchData, action }) {
+function TodoEdit({ todo }) {
   const [form, setForm] = React.useState({ title: "", description: "" });
 
-  React.useEffect(() => {}, []);
+  React.useEffect(() => {
+    if (todo) setForm({ title: todo.title, description: todo.description });
+  }, [todo]);
 
   const onSubmit = async () => {
     try {
-      await createTodo(form);
+      await updateTodo(todo._id, form);
       setForm({ title: "", description: "" });
-      fetchData();
-    } catch (err) {}
+      window.location.href = "/todo";
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <div>
-      <div className="row justify-content-center ">
-        <div className="text-center col-12">
-          <div className="container" style={{ position: "fixed", bottom: 25 }}>
-            <button
-              type="button"
-              className="btn btn-primary btn-lg "
-              data-toggle="modal"
-              data-target="#todoFormModalCenter"
-            >
-              + Create
-            </button>
-          </div>
-        </div>
-      </div>
+      <button
+        type="button"
+        className="btn btn-warning"
+        data-toggle="modal"
+        data-target="#todoEditModalCenter"
+      >
+        Edit
+      </button>
 
       <div
         className="modal fade"
-        id="todoFormModalCenter"
+        id="todoEditModalCenter"
         role="dialog"
-        aria-labelledby="todoFormModalCenterTitle"
+        aria-labelledby="todoEditModalCenterTitle"
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="todoFormModalLongTitle">
-                Add todo
+              <h5 className="modal-title" id="todoEditModalLongTitle">
+                Edit todo
               </h5>
               <button
                 type="button"
@@ -79,6 +77,8 @@ function Todoform({ fetchData, action }) {
                 />
               </div>
             </div>
+            <br />
+            <br />
             <div className="modal-footer">
               <button
                 type="button"
@@ -103,4 +103,4 @@ function Todoform({ fetchData, action }) {
   );
 }
 
-export default Todoform;
+export default TodoEdit;

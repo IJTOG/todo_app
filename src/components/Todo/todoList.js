@@ -1,9 +1,13 @@
 import React from "react";
 import moment from "moment";
 import TodoForm from "./todoForm";
+import { removeToken } from "../../lib/auth";
+
 import { deleteTodo } from "../../lib/api";
 
 function TodoList({ todos, fetchData }) {
+  const [selectedForRemove, setSelectedForRemove] = React.useState("");
+
   React.useEffect(() => {
     const fetchData = async () => {};
     fetchData();
@@ -18,6 +22,9 @@ function TodoList({ todos, fetchData }) {
 
   return (
     <div className="container">
+      <button className="btn btn-light float-right" onClick={removeToken}>
+        Logout
+      </button>
       <h1 className="text-center display-3 Title-header mt-5">TODO </h1>
       <div className="row justify-content-md-center">
         <div className="col-md-8">
@@ -25,27 +32,23 @@ function TodoList({ todos, fetchData }) {
             todos.map((todo) => (
               <div className="card mt-2 " key={todo._id}>
                 <h5 className="card-header bg-light">
-                  <button
-                    type="button"
-                    className="btn btn-light stretched-link"
-                    data-toggle="modal"
-                    data-target="#exampleModalCenter"
-                  >
-                    <span aria-hidden="true">{todo.title}</span>
-                  </button>
+                  <span aria-hidden="true">{todo.title}</span>
                   <button
                     type="button"
                     data-toggle="modal"
                     data-target="#exampleModal"
                     className="close"
                     aria-label="Close"
+                    onClick={() => setSelectedForRemove(todo._id)}
                   >
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </h5>
                 <button
                   type="button"
-                  onClick={() => alert("here")}
+                  onClick={() =>
+                    (window.location.href = `/detail?id=${todo._id}`)
+                  }
                   className="list-group-item list-group-item-action"
                 >
                   <div className="card-body">
@@ -55,45 +58,43 @@ function TodoList({ todos, fetchData }) {
                     </p>
                   </div>
                 </button>
-
                 <div
-                  class="modal fade"
+                  className="modal fade"
                   id="exampleModal"
-                  tabindex="-1"
                   role="dialog"
                   aria-labelledby="exampleModalLabel"
                   aria-hidden="true"
                 >
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
+                  <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel">
                           Confirm to delete
                         </h5>
                         <button
                           type="button"
-                          class="close"
+                          className="close"
                           data-dismiss="modal"
                           aria-label="Close"
                         >
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <div class="modal-body">Are you sure?</div>
-                      <div class="modal-footer">
+                      <div className="modal-body">Are you sure?</div>
+                      <div className="modal-footer">
                         <button
                           type="button"
-                          class="btn btn-secondary"
+                          className="btn btn-secondary"
                           data-dismiss="modal"
                         >
                           Close
                         </button>
                         <button
                           onClick={() => {
-                            handleRemove(todo._id);
+                            handleRemove(selectedForRemove);
                           }}
                           type="button"
-                          class="btn btn-danger"
+                          className="btn btn-danger"
                           data-dismiss="modal"
                         >
                           Delete
@@ -111,7 +112,7 @@ function TodoList({ todos, fetchData }) {
           )}
         </div>
       </div>
-      <TodoForm />
+      <TodoForm fetchData={fetchData} />
       <br />
     </div>
   );

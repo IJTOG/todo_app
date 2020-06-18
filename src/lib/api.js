@@ -42,11 +42,9 @@ const getTodos = async () => {
   }
 };
 
-const getProduct = async (_id) => {
+const getTodo = async (id) => {
   try {
-    let response = await axios.get(
-      `http://${host}:${port}/api/products/` + _id
-    );
+    let response = await axios.get(`${host}/todos/${id}`);
     return response.data;
   } catch (err) {
     return Promise.reject(err);
@@ -62,12 +60,9 @@ const createTodo = async (form) => {
   }
 };
 
-const updateTodo = async (form) => {
+const updateTodo = async (id, form) => {
   try {
-    let response = await axios.patch(
-      `http://${host}:${port}/api/products/update`,
-      form
-    );
+    let response = await axios.put(`${host}/todos/${id}`, form);
     return response.data;
   } catch (err) {
     return Promise.reject(err);
@@ -83,4 +78,4 @@ const deleteTodo = async (_id) => {
   }
 };
 
-export { login, getTodos, getProduct, deleteTodo, updateTodo, createTodo };
+export { login, getTodos, getTodo, deleteTodo, updateTodo, createTodo };
