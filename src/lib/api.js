@@ -2,7 +2,6 @@ import axios from "axios";
 import { setToken } from "./auth";
 
 const host = "https://candidate.neversitup.com/todo";
-const port = process.env.port;
 // --------------------------------------- Always attached Access token(If exist) ------------------------------------------
 axios.interceptors.request.use(
   (config) => {
@@ -24,7 +23,7 @@ const login = async (username, password) => {
   try {
     let response = await axios.post(`${host}/users/auth`, {
       username,
-      password
+      password,
     });
     setToken(response.data.token);
     window.location.href = "Todo";

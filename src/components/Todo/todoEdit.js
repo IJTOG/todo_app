@@ -1,7 +1,10 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { updateTodo } from "../../lib/api";
 
 function TodoEdit({ todo }) {
+  let history = useHistory();
+
   const [form, setForm] = React.useState({ title: "", description: "" });
 
   React.useEffect(() => {
@@ -9,18 +12,23 @@ function TodoEdit({ todo }) {
   }, [todo]);
 
   const onSubmit = async () => {
-    try {
-      await updateTodo(todo._id, form);
-      setForm({ title: "", description: "" });
-      window.location.href = "/todo";
-    } catch (err) {
-      console.log(err);
-    }
+    if (form.title !== "" && form.description !== "")
+      try {
+        await updateTodo(todo._id, form);
+        setForm({ title: "", description: "" });
+        history.push("/todo");
+      } catch (err) {
+        console.log(err);
+      }
+    else alert("Please fill the form");
   };
 
   return (
     <div>
       <button
+        onClick={() =>
+          setForm({ title: todo.title, description: todo.description })
+        }
         type="button"
         className="btn btn-warning"
         data-toggle="modal"
@@ -64,7 +72,7 @@ function TodoEdit({ todo }) {
                 />
               </div>
               <div className="form-group">
-                <label>description</label>
+                <label>Description</label>
                 <input
                   type="text"
                   className="form-control  App-input"

@@ -7,18 +7,23 @@ function Todoform({ fetchData, action }) {
   React.useEffect(() => {}, []);
 
   const onSubmit = async () => {
-    try {
-      await createTodo(form);
-      setForm({ title: "", description: "" });
-      fetchData();
-    } catch (err) {}
+    if (form.title !== "" && form.description !== "")
+      try {
+        await createTodo(form);
+        setForm({ title: "", description: "" });
+        fetchData();
+      } catch (err) {}
+    else alert("Please fill the form");
   };
 
   return (
     <div>
-      <div className="row justify-content-center ">
+      <div className="row justify-content-center">
         <div className="text-center col-12">
-          <div className="container" style={{ position: "fixed", bottom: 25 }}>
+          <div
+            className="container"
+            style={{ position: "fixed", bottom: 25, right: "3%" }}
+          >
             <button
               type="button"
               className="btn btn-primary btn-lg "
@@ -66,7 +71,7 @@ function Todoform({ fetchData, action }) {
                 />
               </div>
               <div className="form-group">
-                <label>description</label>
+                <label>Description</label>
                 <input
                   type="text"
                   className="form-control  App-input"

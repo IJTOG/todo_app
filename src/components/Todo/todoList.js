@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import TodoForm from "./todoForm";
-import { removeToken } from "../../lib/auth";
+import { Link } from "react-router-dom";
 
 import { deleteTodo } from "../../lib/api";
 
@@ -22,10 +22,8 @@ function TodoList({ todos, fetchData }) {
 
   return (
     <div className="container">
-      <button className="btn btn-light float-right" onClick={removeToken}>
-        Logout
-      </button>
-      <h1 className="text-center display-3 Title-header mt-5">TODO </h1>
+      <br />
+      <h1 className="text-center display-3 Title-header mt-1">TODO</h1>
       <div className="row justify-content-md-center">
         <div className="col-md-8">
           {todos.length > 0 ? (
@@ -44,20 +42,22 @@ function TodoList({ todos, fetchData }) {
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </h5>
-                <button
-                  type="button"
-                  onClick={() =>
-                    (window.location.href = `/detail?id=${todo._id}`)
-                  }
-                  className="list-group-item list-group-item-action"
+                <Link
+                  to={`/detail?id=${todo._id}`}
+                  style={{ textDecoration: "none" }}
                 >
-                  <div className="card-body">
-                    <p className="card-text">{todo.description}</p>
-                    <p className="card-text float-right">
-                      {moment(todo.createdAt).locale("th").format("LLL")}
-                    </p>
-                  </div>
-                </button>
+                  <button
+                    type="button"
+                    className="list-group-item list-group-item-action"
+                  >
+                    <div className="card-body">
+                      <p className="card-text">{todo.description}</p>
+                      <p className="card-text float-right">
+                        {moment(todo.createdAt).locale("th").format("LLL")}
+                      </p>
+                    </div>
+                  </button>
+                </Link>
                 <div
                   className="modal fade"
                   id="exampleModal"
@@ -113,6 +113,9 @@ function TodoList({ todos, fetchData }) {
         </div>
       </div>
       <TodoForm fetchData={fetchData} />
+      <br />
+      <br />
+      <br />
       <br />
     </div>
   );
